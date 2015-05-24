@@ -116,7 +116,7 @@ app.controller("AJS", function($scope, $localStorage) {
         for(var i = 0; i < $localStorage.trackers.length; i++) {
             if($localStorage.trackers[i] === $scope.editTrackerX) {
                 var index = i;
-                 $localStorage.trackers[index].name = $scope.name
+                $localStorage.trackers[index].name = $scope.name
                 $localStorage.trackers[index].description = $scope.description
                 $localStorage.trackers[index].price = $scope.price
                 $localStorage.trackers[index].funds = $scope.funds
