@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Title</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="css/jquery.mobile.icons-1.4.5.min.css" />
+        <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.css" />
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css" />
+        <link rel="stylesheet" href="main.css">
+        <script src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/AJS.js"></script>
+        </script> 
+    </head>
+    <body ng-app="myApp" ng-controller="AJS">
+        <!--PAGE:  HOME-->
+        <div data-role="page" id="home" >
+            <!--PANEL-->
+            <div data-role="panel" id="homeNav" data-position="left" data-display="reveal">
+                <ul data-role="listview" data-inset="true" data-split-icon="gear">
+                    <li> <a href="#home">Home</a></li>
+                    <li> <a href="#trackers">Trackers</a></li>
+                    <li> <a href="#addTracker">Add tracker</a></li>
+                </ul>
+                <a class="ui-btn ui-shadow ui-corner-all  ui-btn-mini  " href="#homeNav">Close</a>  
+            </div>
+            <!--panel -->
+            <!--navigation header-->
+            <div data-role="header">
+                <a class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini ui-btn-left ui-btn-icon-left ui-icon-navigation" href="#homeNav">Nav</a>   
+                <h1>TRACKER </h1>
+            </div>
+            <!--header -->
+            <!--Content-->
+            <div role="main" class="ui-content">
+                <h1>Homepage</h1>
+                <div class="ui-bar ui-bar-a" style="background-color: #6CB3E0">
+                    <h3 style="color: white">Goals</h3>
+                </div>
+                <h2>Active</h2>
+                <div class="ui-body ui-body-a" ng-repeat="track in activeTrackers()">
+                    <span style="float: left"><h4>{{track.name}}</h4></span><span style="position: absolute; right: 30.5%; color: black;"><h4>{{ tProgress(track) * 100 | number : 0}}% </h4></span>
+                    <progress value="{{ tProgress(track) }}" style="width: 65%; display: block; float: right; height: 30px; margin-top: 15px">
+                    </progress> 
+                </div>
+                <h2>Inactive</h2>
+                <div class="ui-body ui-body-a" ng-repeat="track in inactiveTrackers()">
+                    <span style="float: left">
+                    <h4>{{track.name}}</h4>
+                    </span>
+                    <span style="position: absolute; right: 30.5%; color: black;">
+                    <h4>{{ tProgress(track) * 100 | number : 0}}% </h4>
+                    </span>
+                    <progress value="{{ tProgress(track) }}" style="width: 65%; display: block; float: right; height: 30px; margin-top: 15px;"></progress> 
+                </div>
+                <!--main content -->
+                <div data-role="footer">
+                    <p style="text-align: center">Edit and view more information on the trackers page.</p>
+                </div>
+            </div>
+            <!--footer -->
+        </div>
+        <!--end home page -->   
+        <!--PAGE:  HOME-->
+        <div data-role="page" id="trackers" >
+            <!--PANEL-->
+            <div data-role="panel" id="trackersNav" data-position="left" data-display="reveal">
+                <ul data-role="listview" data-inset="true" data-split-icon="gear">
+                    <li> <a href="#home">Home</a></li>
+                    <li> <a href="#trackers">Trackers</a></li>
+                    <li> <a href="#addTracker">Add tracker</a></li>
+                </ul>
+                <a class="ui-btn ui-shadow ui-corner-all  ui-btn-mini  " href="#trackersNav">Close</a>  
+            </div>
+            <!--panel -->
+            <!--navigation header-->
+            <div data-role="header">
+                <a class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini ui-btn-left ui-btn-icon-left ui-icon-navigation" href="#trackersNav">Nav</a>   
+                <h1>TRACKER </h1>
+            </div>
+            <!--header -->
+            <!--Content-->
+            <div role="main" class="ui-content">
+                <h1>Trackers</h1>
+                <div class="ui-bar ui-bar-a">
+                    <h3>List Edit Delete</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <h2>Active</h2>
+                    <div data-role="collapsibleset" data-content-theme="a" data-iconpos="right" id="set" ng-repeat="item in activeTrackers()">
+                        <div data-role="collapsible" id="set1" data-collapsed="true">
+                            <h3>{{ item.name }} </h3></p>
+                            <p>Desc:&nbsp;&nbsp;{{ item.description }}</p>
+                            <p>Price:&nbsp;&nbsp;{{ item.price | currency}}</p>
+                            <p>Funds:&nbsp;{{ item.funds | currency}}</p>
+                            <p>Date:&nbsp;&nbsp;&nbsp;{{ item.date | date: 'dd MMMM yyyy' }}</p>
+                            <a data-role="button" data-theme="a" data-icon="edit" href="#edit"  ng-click="editTracker(item)" data-rel="popup" data-position-to="window" ndata-transition="pop">EDIT</a>
+                            <a data-role="button" data-theme="a" data-icon="delete" href="#removeTrack"  ng-click="editTracker(item)" data-rel="popup" data-position-to="window" ndata-transition="pop">DELETE</a>                              
+                        </div>
+                    </div>
+                    <h2>Inactive</h2>
+                    <div data-role="collapsibleset" data-content-theme="a" data-iconpos="right" id="set" ng-repeat="itemz in inactiveTrackers()">
+                        <div data-role="collapsible" id="set1" data-collapsed="true">
+                            <h3>{{ itemz.name }} </h3></p>
+                            <p>Desc:&nbsp;&nbsp;{{ itemz.description }}</p>
+                            <p>Price:&nbsp;&nbsp;{{ itemz.price | currency}}</p>
+                            <p>Funds:&nbsp;{{ itemz.funds | currency}}</p>
+                            <p>Date:&nbsp;&nbsp;&nbsp;{{ itemz.date | date: 'dd MMMM yyyy' }}</p>
+                            <a data-role="button" data-theme="a" data-icon="edit" href="#edit"  ng-click="editTracker(itemz)" data-rel="popup" data-position-to="window" ndata-transition="pop">EDIT</a>
+                            <a data-role="button" data-theme="a" data-icon="delete" href="#removeTrack"  ng-click="editTracker(itemz)" data-rel="popup" data-position-to="window" ndata-transition="pop">DELETE</a>                              
+                        </div>
+                    </div>
+                    <!--EDIT-->
+                    <div data-role="popup" id="edit" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+                        <a href="index.html" ng-click="saveEdit()"   data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">SAVE EDIT</a>
+                        <table width="90%" border="1" cellspacing="2" cellpadding="2">
+                            <tr>
+                                <td>Name</td>
+                                <td> <input  type="text" name="name" ng-model="name"  /></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td> <input  type="text" name="description" ng-model="description"  /></td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td> <input type="text" name="price" ng-model="price"  /></td>
+                            </tr>
+                            <tr>
+                                <td>Funds</td>
+                                <td> <input type="text" name="funds" ng-model="funds"  /></td>
+                            </tr>
+                            <tr>
+                                <td>Date</td>
+                                <td><input  type="date" name="date" ng-model="date"  /></td>
+                            </tr>
+                        </table>
+                        <a class="ui-btn ui-shadow ui-corner-all  ui-btn-mini"  data-rel="back"  href="index.html">Close</a>
+                    </div>
+                    <!--of edit pop-up-->     
+                    <!-- delete popup -->     
+                    <div data-role="popup" id="removeTrack" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+                        <p style="text-align: center; font-weight: 700; font-size: 17px;">Are you sure you want to delete this tracker?</p>
+                        <a href="index.html" ng-click="removeTracker()"   data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini" style="background-color: #F83636; color: white; width: 305px; margin-left: -0px;">Delete</a>
+                        <a class="ui-btn ui-shadow ui-corner-all  ui-btn-mini"  data-rel="back"  href="index.html" style="background-color: #279BE4; color: white">Cancel</a>
+                    </div>
+                    <!-- end of delete popup -->           
+                </div>
+            </div>
+            <!--main content -->
+            <div data-role="footer"  >
+                <p> </p>
+            </div>
+            <!--footer -->
+        </div>
+        <!--end home page -->  
+        <!--PAGE:  HOME-->
+        <div data-role="page" id="addTracker" >
+            <!--PANEL-->
+            <div data-role="panel" id="addTrackerNav" data-position="left" data-display="reveal">
+                <ul data-role="listview" data-inset="true" data-split-icon="gear">
+                    <li> <a href="#home">Home</a></li>
+                    <li> <a href="#trackers">Trackers</a></li>
+                    <li> <a href="#addTracker">Add tracker</a></li>
+                </ul>
+                <a class="ui-btn ui-shadow ui-corner-all  ui-btn-mini  " href="#addTrackerNav">Close</a>  
+            </div>
+            <!--panel -->
+            <!--navigation header-->
+            <div data-role="header">
+                <a class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini ui-btn-left ui-btn-icon-left ui-icon-navigation" href="#addTrackerNav">Nav</a>   
+                <h1>TRACKER </h1>
+            </div>
+            <!--header -->
+            <!--Content-->
+            <div role="main" class="ui-content">
+                <div class="ui-bar ui-bar-a">
+                    <h3>Add Tracker</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <form ng-submit="createTracker()" class="contact_form" name="contact_form">
+                        <ul>
+                            <li>
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" ng-model="tName" required />
+                            </li>
+                            <li>
+                                <label for="Description">Description:</label>
+                                <textarea name="Description" ng-model="tDescription" style="resize: none"></textarea>
+                            </li>
+                            <li>
+                                <label for="price">Total Price:</label>
+                                <input type="text" name="price" ng-model="tPrice" required />
+                            </li>
+                            <li>
+                                <label for="funds">Current Funds:</label>
+                                <input name="funds" ng-model="tFunds" />
+                            </li>
+                            <li>
+                                <label for="date">Completion Date:</label>
+                                <input name="date" type="date" ng-model="tDate" />
+                            </li>
+                            <li>
+                                <input type="submit" value="Submit Form" />
+                            </li>
+                        </ul>
+                    </form>
+<!--                     <div ng-repeat="tracker in $storage.trackers">
+    name: {{ tracker.name }} price: {{ tracker.price }}
+    <button ng-click="removeTracker($index)">Delete</button>
+</div> -->
+                </div>
+            </div>
+            <!--main content -->
+            <div data-role="footer"  >
+                <p> </p>
+            </div>
+            <!--footer -->
+        </div>
+        <!--end home page -->      
+    </body>
+</html>

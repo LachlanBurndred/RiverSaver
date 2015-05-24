@@ -1,0 +1,22 @@
+.contact_form ul {
+	list-style-type: none;
+	list-style-position: outside;
+	margin: 0;
+	padding: 0;
+}
+.contact_form li {
+	padding: 12px;
+	border-bottom: 1px solid #eee;
+	position: relative;
+}
+progress {
+	  -webkit-appearance: none;
+   appearance: none;
+}
+progress::-webkit-progress-bar {
+	background: #fff;
+	border: 1px solid grey;
+}
+progress::-webkit-progress-value {
+	background: #31AAE2;
+}
